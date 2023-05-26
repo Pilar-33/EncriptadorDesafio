@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Encriptador</title>
+  <style>
+    body {
+      font-family: "Times New Roman", sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-image: url('https://img.freepik.com/foto-gratis/fondo-manchas-acuarela_23-2148175569.jpg?w=996&t=st=1685084961~exp=1685085561~hmac=c26598a22e1515a02ab67fdd03951947f4946d94edcfba25838295031f29d4e7');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 3px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    textarea {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      resize: none;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .button-container button {
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button-container button.encriptar {
+      background-color: #337ab7;
+    }
+
+    .button-container button.desencriptar {
+      background-color: #337ab7;
+    }
+
+    .button-container button.copy {
+      background-color: #337ab7;
+    }
+
+    .button-container button:hover {
+      background-color: #135b9e;
+    }
+
+    #resultado {
+      height: 100px;
+    }
+
+    #footer {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-top: 20px;
+    }
+  </style>
+  <script>
+    function encriptarTexto() {
+      var texto = document.getElementById("texto").value.toLowerCase();
+
+      if (!contieneVocales(texto)) {
+        alert("Por favor, ingrese una palabra con vocales.");
+        return;
+      }
+
+      var resultado = "";
+
+      for (var i = 0; i < texto.length; i++) {
+        var letra = texto.charAt(i);
+        switch (letra) {
+          case "e":
+            resultado += "enter";
+            break;
+          case "i":
+            resultado += "imes";
+            break;
+          case "a":
+            resultado += "ai";
+            break;
+          case "o":
+            resultado += "ober";
+            break;
+          case "u":
+            resultado += "ufat";
+            break;
+          default:
+            resultado += letra;
+            break;
+        }
+      }
+
+      document.getElementById("resultado").value = resultado;
+    }
+
+    function desencriptarTexto() {
+      var texto = document.getElementById("texto").value.toLowerCase();
+
+      if (!contieneVocales(texto)) {
+        alert("Por favor, ingrese una palabra con vocales.");
+        return;
+      }
+
+      var resultado = "";
+
+      for (var i = 0; i < texto.length; i++) {
+        var letra = texto.charAt(i);
+        if (letra === "e" && texto.substr(i, 5) === "enter") {
+          resultado += "e";
+          i += 4;
+        } else if (letra === "i" && texto.substr(i, 4) === "imes") {
+          resultado += "i";
+          i += 3;
+        } else if (letra === "a" && texto.substr(i, 2) === "ai") {
+          resultado += "a";
+          i += 1;
+        } else if (letra === "o" && texto.substr(i, 4) === "ober") {
+          resultado += "o";
+          i += 3;
+        } else if (letra === "u" && texto.substr(i, 4) === "ufat") {
+          resultado += "u";
+          i += 3;
+        } else {
+          resultado += letra;
+        }
+      }
+
+      document.getElementById("resultado").value = resultado;
+    }
+
+    function contieneVocales(texto) {
+      var vocales = ["a", "e", "i", "o", "u"];
+
+      for (var i = 0; i < texto.length; i++) {
+        if (vocales.indexOf(texto.charAt(i)) !== -1) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    function copiarTexto() {
+      var resultado = document.getElementById("resultado");
+      resultado.select();
+      document.execCommand("copy");
+      alert("Texto copiado al portapapeles.");
+    }
+
+    function manejarEnter(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        encriptarTexto();
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Encriptador de Textos</h1>
+
+    <div class="row">
+      <label for="texto">Texto:</label>
+      <textarea id="texto" rows="4" placeholder="Ingrese el texto" onkeydown="manejarEnter(event)"></textarea>
+    </div>
+
+    <div class="row">
+      <label for="resultado">Resultado:</label>
+      <textarea id="resultado" rows="4" readonly placeholder="Texto encriptado/desencriptado"></textarea>
+    </div>
+
+    <div class="button-container">
+      <button class="encriptar" onclick="encriptarTexto()">Encriptar</button>
+      <button class="desencriptar" onclick="desencriptarTexto()">Desencriptar</button>
+      <button class="copy" onclick="copiarTexto()">Copiar</button>
+    </div>
+
+    <div id="footer">
+      Desarrollado por María Lévano
+    </div>
+  </div>
+</body>
+</html>
